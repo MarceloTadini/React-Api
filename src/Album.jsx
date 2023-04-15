@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
+import Loading from "./Loading";
 
 function Album() {
 
-    const [loading, setLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
     const [albums, setAlbums] = useState([])
 
     useEffect(() => {
-        setLoading(true)
+        setIsLoading(true)
         fetch('https://jsonplaceholder.typicode.com/albums')
             .then(response => response.json())
             .then(data => {
                 setAlbums(data)
-                setLoading(false)
+                setIsLoading(false)
             })
 
     }, [])
@@ -19,9 +20,7 @@ function Album() {
     return (
         <>
             <h1>Álbuns</h1>
-            {
-                loading === true ? 'Carregando...' : ''
-            }
+            <Loading visible={isLoading}/>
 
             {
                 albums.map(album => {
